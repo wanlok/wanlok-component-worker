@@ -194,7 +194,7 @@ export default {
 		}
 
 		const preview = await buildCollectionPreview(env, slug);
-		return new Response(renderPreviewHtml(preview, request.url), {
+		return new Response(renderPreviewHtml(preview, destination), {
 			headers: { "content-type": "text/html; charset=utf-8" }
 		});
 	}
