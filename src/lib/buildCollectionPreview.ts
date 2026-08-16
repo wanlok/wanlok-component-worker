@@ -1,7 +1,7 @@
 import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
 import { toSlug } from "./toSlug";
 import { humanizeSlug } from "./humanizeSlug";
-import { CloudinaryFile, Folder, Preview, ThumbnailItem } from "./Types";
+import { CloudinaryFileInfo, Folder, Preview, SteamInfo, YouTubeInfo } from "./Types";
 
 export const buildCollectionPreview = async (env: Env, slug: string): Promise<Preview> => {
   const [folders, collection] = await Promise.all([
@@ -13,10 +13,10 @@ export const buildCollectionPreview = async (env: Env, slug: string): Promise<Pr
   const folder = folderList.find((candidate) => toSlug(candidate.name) === slug);
   const title = folder?.name ?? humanizeSlug(slug);
 
-  const files = (collection?.files as Record<string, CloudinaryFile> | undefined) ?? {};
-  const youtubeRegular = (collection?.youtubeRegular as Record<string, ThumbnailItem> | undefined) ?? {};
-  const youtubeShorts = (collection?.youtubeShorts as Record<string, ThumbnailItem> | undefined) ?? {};
-  const steam = (collection?.steam as Record<string, ThumbnailItem> | undefined) ?? {};
+  const files = (collection?.files as Record<string, CloudinaryFileInfo> | undefined) ?? {};
+  const youtubeRegular = (collection?.youtubeRegular as Record<string, YouTubeInfo> | undefined) ?? {};
+  const youtubeShorts = (collection?.youtubeShorts as Record<string, YouTubeInfo> | undefined) ?? {};
+  const steam = (collection?.steam as Record<string, SteamInfo> | undefined) ?? {};
 
   const itemCount = [files, youtubeRegular, youtubeShorts, steam].reduce(
     (total, bucket) => total + Object.keys(bucket).length,

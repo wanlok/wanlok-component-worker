@@ -5,9 +5,9 @@ import { renderPreviewHtml } from "../lib/renderPreviewHtml";
 
 const SITE_ORIGIN = "https://wanlok.github.io";
 
-export const shareRoutes = new Hono<{ Bindings: Env }>();
+export const route = new Hono<{ Bindings: Env }>();
 
-shareRoutes.get("/collections/:slug", async (c) => {
+route.get("/collections/:slug", async (c) => {
   const slug = decodeURIComponent(c.req.param("slug"));
   const destination = `${SITE_ORIGIN}/#/collections/${slug}`;
 
