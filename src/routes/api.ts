@@ -1,7 +1,9 @@
 import { Hono } from "hono";
 import { fetchFirestoreDocument } from "../lib/fetchFirestoreDocument";
+import { getCollectionAttributes } from "../lib/getCollectionAttributes";
+import { getCollectionItems } from "../lib/getCollectionItems";
 import { toSlug } from "../lib/toSlug";
-import { Folder } from "../lib/Types";
+import { ApiResponse, CollectionItem, Folder } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
 
@@ -13,5 +15,10 @@ route.get("/collections", async (c) => {
 });
 
 route.get("/collections/:slug", async (c) => {
-  return c.json({ name: "Hello World" });
+  const slug = decodeURIComponent(c.req.param("slug"));
+  const filters = [...new URL(c.req.url).searchParams.entries()];
+  const collectionAttributes = await getCollectionAttributes(c.env, slug);
+  const items = await getCollectionItems(c.env, slug, collectionAttributes, filters);
+  const response: ApiResponse<Record<string, CollectionItem>> = { status: "ok", data: items };
+  return c.json(response);
 });
