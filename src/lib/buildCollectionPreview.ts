@@ -5,8 +5,8 @@ import { CloudinaryFile, Folder, Preview, ThumbnailItem } from "./Types";
 
 export const buildCollectionPreview = async (env: Env, slug: string): Promise<Preview> => {
   const [folders, collection] = await Promise.all([
-    fetchFirestoreDocument(env.FIREBASE_PROJECT_ID, "configs/folders"),
-    fetchFirestoreDocument(env.FIREBASE_PROJECT_ID, `collections/${slug}`)
+    fetchFirestoreDocument(env, "configs/folders"),
+    fetchFirestoreDocument(env, `collections/${slug}`)
   ]);
 
   const folderList = (folders?.folders as Folder[] | undefined) ?? [];
