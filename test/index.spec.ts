@@ -1,9 +1,4 @@
-import {
-	env,
-	createExecutionContext,
-	waitOnExecutionContext,
-	SELF,
-} from "cloudflare:test";
+import { env, createExecutionContext, waitOnExecutionContext, SELF } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 import worker from "../src/index";
 
@@ -11,19 +6,26 @@ import worker from "../src/index";
 // `Request` to pass to `worker.fetch()`.
 const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
-describe("Hello World worker", () => {
-	it("responds with Hello World! (unit style)", async () => {
-		const request = new IncomingRequest("http://example.com");
-		// Create an empty context to pass to `worker.fetch()`.
+describe("share/collections/:slug", () => {
+	it("redirects non-bot visitors to the hash-routed site (unit style)", async () => {
+		const request = new IncomingRequest("https://component.wanlok.workers.dev/share/collections/hong-kong-food");
 		const ctx = createExecutionContext();
 		const response = await worker.fetch(request, env, ctx);
-		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
 		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+		expect(response.status).toBe(302);
+		expect(response.headers.get("location")).toBe("https://wanlok.github.io/#/collections/hong-kong-food");
 	});
 
-	it("responds with Hello World! (integration style)", async () => {
-		const response = await SELF.fetch("https://example.com");
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+	it("redirects non-bot visitors to the hash-routed site (integration style)", async () => {
+		const response = await SELF.fetch("https://component.wanlok.workers.dev/share/collections/hong-kong-food", {
+			redirect: "manual"
+		});
+		expect(response.status).toBe(302);
+		expect(response.headers.get("location")).toBe("https://wanlok.github.io/#/collections/hong-kong-food");
+	});
+
+	it("returns 404 for unmatched paths", async () => {
+		const response = await SELF.fetch("https://component.wanlok.workers.dev/nope");
+		expect(response.status).toBe(404);
 	});
 });
