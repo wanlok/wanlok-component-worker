@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { fetchFirestoreDocument } from "../lib/fetchFirestoreDocument";
 import { getCollectionAttributes } from "../lib/getCollectionAttributes";
 import { getCollectionItems } from "../lib/getCollectionItems";
@@ -6,6 +7,8 @@ import { toSlug } from "../lib/toSlug";
 import { ApiResponse, CollectionItem, Folder } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
+
+route.use(cors());
 
 route.get("/collections", async (c) => {
   const document = await fetchFirestoreDocument(c.env, "configs/folders");
