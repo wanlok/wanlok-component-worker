@@ -1,5 +1,5 @@
-import { escapeHTML } from './escapeHTML';
-import { Preview } from './Types';
+import { escapeHTML } from "./escapeHTML";
+import { Preview } from "./Types";
 
 export const renderPreviewHtml = (preview: Preview, pageUrl: string): string => `<!doctype html>
 <html lang="en">
@@ -10,8 +10,8 @@ export const renderPreviewHtml = (preview: Preview, pageUrl: string): string => 
 <meta property="og:title" content="${escapeHTML(preview.title)}">
 <meta property="og:description" content="${escapeHTML(preview.description)}">
 <meta property="og:url" content="${escapeHTML(pageUrl)}">
-${preview.image ? `<meta property="og:image" content="${escapeHTML(preview.image)}">` : ''}
-<meta name="twitter:card" content="${preview.image ? 'summary_large_image' : 'summary'}">
+${preview.image ? `<meta property="og:image" content="${escapeHTML(preview.image)}">` : ""}
+<meta name="twitter:card" content="${preview.image ? "summary_large_image" : "summary"}">
 </head>
 <body>
 <p>${escapeHTML(preview.title)}</p>

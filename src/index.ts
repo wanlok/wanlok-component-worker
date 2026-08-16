@@ -11,9 +11,11 @@
 
 import { Hono } from "hono";
 import { shareRoutes } from "./routes/share";
+import { apiRoutes } from "./routes/api";
 
 const app = new Hono<{ Bindings: Env }>({ strict: false });
 
 app.route("/share", shareRoutes);
+app.route("/api", apiRoutes);
 
 export default app;
