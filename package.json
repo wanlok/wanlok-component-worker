@@ -7,12 +7,19 @@
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "test": "vitest",
-    "cf-typegen": "wrangler types"
+    "lint": "eslint .",
+    "cf-typegen": "wrangler types",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.12.4",
+    "@eslint/js": "^9.39.5",
     "@types/node": "^26.2.0",
+    "eslint": "^9.39.5",
+    "globals": "^17.11.0",
+    "husky": "^9.1.7",
     "typescript": "^5.5.2",
+    "typescript-eslint": "^8.67.0",
     "vitest": "~3.2.0",
     "wrangler": "^4.122.0"
   },
