@@ -1,27 +1,20 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { fetchFirestoreDocument } from "../lib/firebase/fetchFirestoreDocument";
-import { getCollectionAttributes } from "../lib/getCollectionAttributes";
-import { getCollectionItems } from "../lib/getCollectionItems";
-import { toSlug } from "../lib/toSlug";
-import { ApiResponse, CollectionItem, Folder } from "../lib/Types";
+import { getCollection } from "../lib/getCollection";
+import { getFolders } from "../lib/getFolders";
 
 export const route = new Hono<{ Bindings: Env }>();
 
 route.use(cors());
 
 route.get("/collections", async (c) => {
-  const document = await fetchFirestoreDocument(c.env, "configs/folders");
-  const folders = (document?.folders as Folder[] | undefined) ?? [];
-  const collections = folders.map((folder) => ({ name: folder.name, slug: toSlug(folder.name) }));
+  const collections = await getFolders(c.env);
   return c.json(collections);
 });
 
 route.get("/collections/:slug", async (c) => {
   const slug = decodeURIComponent(c.req.param("slug"));
   const filters = [...new URL(c.req.url).searchParams.entries()];
-  const collectionAttributes = await getCollectionAttributes(c.env, slug);
-  const items = await getCollectionItems(c.env, slug, collectionAttributes, filters);
-  const response: ApiResponse<Record<string, CollectionItem>> = { status: "ok", data: items };
-  return c.json(response);
+  const data = await getCollection(c.env, slug, filters);
+  return c.json({ status: "ok", data });
 });

@@ -30,19 +30,17 @@ export type QuizContent = { type: "text" | "image"; value: string };
 
 export type Quiz = { question: QuizContent[]; answers: { content: QuizContent[]; correct: boolean }[] };
 
-export type Attributes = { [key: string]: string };
+export type Attribute = { name: string; type: "text" | "number"; visible?: boolean };
 
-export type TypedAttributes = { [key: string]: number | string };
-
-export type CollectionAttributes = { name: string; type: "text" | "number"; visible?: boolean }[];
+export type AttributeValues = { [key: string]: string };
 
 export interface Folder {
   name: string;
-  attributes: CollectionAttributes;
+  attributes: Attribute[];
 }
 
 interface ParentInfo {
-  attributes?: Attributes;
+  attributes?: AttributeValues;
 }
 
 export interface CloudinaryFileInfo extends ParentInfo {

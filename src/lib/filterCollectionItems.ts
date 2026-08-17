@@ -1,22 +1,22 @@
 import { toSlug } from "./toSlug";
-import { CollectionAttributes, CollectionItem } from "./Types";
+import { Attribute, CollectionItem } from "./Types";
 
 export const filterCollectionItems = (
-  result: Record<string, CollectionItem>,
-  collectionAttributes: CollectionAttributes,
+  items: Record<string, CollectionItem>,
+  attributes: Attribute[],
   filters: [string, string][]
 ): Record<string, CollectionItem> => {
   if (filters.length === 0) {
-    return result;
+    return items;
   }
   return Object.fromEntries(
-    Object.entries(result).filter(([, item]) =>
-      filters.every(([paramKey, paramValue]) => {
-        const attribute = collectionAttributes.find((a) => toSlug(a.name) === paramKey);
+    Object.entries(items).filter(([, item]) =>
+      filters.every(([key, value]) => {
+        const attribute = attributes.find((a) => toSlug(a.name) === key);
         if (!attribute) {
           return false;
         }
-        return toSlug(String(item[attribute.name] ?? "")) === toSlug(paramValue);
+        return toSlug(String(item[attribute.name] ?? "")) === toSlug(value);
       })
     )
   );
