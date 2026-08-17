@@ -12,11 +12,10 @@ const getAttributes = async (env: Env, slug: string): Promise<Attribute[]> => {
   return folder.attributes;
 };
 
-export const parseAttributeValues = (
-  base: Record<string, string | number>,
+const parseAttributeValues = (
   attributes: Attribute[],
   attributeValues: AttributeValues | undefined
-): CollectionItem => {
+): { [key: string]: number | string } => {
   const typedAttributeValues: { [key: string]: number | string } = {};
   attributes.forEach(({ name, type }) => {
     const value = attributeValues?.[name];
@@ -28,7 +27,7 @@ export const parseAttributeValues = (
       }
     }
   });
-  return { ...base, ...typedAttributeValues };
+  return typedAttributeValues;
 };
 
 const getItems = async (
@@ -41,22 +40,22 @@ const getItems = async (
   if (!data) {
     return {};
   }
-  const result: Record<string, CollectionItem> = {};
+  const items: Record<string, CollectionItem> = {};
   Object.entries(data.files ?? {}).forEach(([key, { name, url, attributes: attributeValues, layout, regions }]) => {
-    const item = parseAttributeValues({ name, url }, attributes, attributeValues);
+    const item = { name, url, ...parseAttributeValues(attributes, attributeValues) };
     const quiz = getQuiz(layout, regions);
-    result[key] = quiz ? { ...item, quiz } : item;
+    items[key] = quiz ? { ...item, quiz } : item;
   });
   Object.entries(data.youtubeRegular ?? {}).forEach(([key, { name, imageUrl, attributes: attributeValues }]) => {
-    result[key] = parseAttributeValues({ name, imageUrl }, attributes, attributeValues);
+    items[key] = { name, imageUrl, ...parseAttributeValues(attributes, attributeValues) };
   });
   Object.entries(data.youtubeShorts ?? {}).forEach(([key, { name, imageUrl, attributes: attributeValues }]) => {
-    result[key] = parseAttributeValues({ name, imageUrl }, attributes, attributeValues);
+    items[key] = { name, imageUrl, ...parseAttributeValues(attributes, attributeValues) };
   });
   Object.entries(data.steam ?? {}).forEach(([key, { name, imageUrl, attributes: attributeValues }]) => {
-    result[key] = parseAttributeValues({ name, imageUrl }, attributes, attributeValues);
+    items[key] = { name, imageUrl, ...parseAttributeValues(attributes, attributeValues) };
   });
-  return filterCollectionItems(result, attributes, filters);
+  return filterCollectionItems(items, attributes, filters);
 };
 
 export const getCollection = async (
