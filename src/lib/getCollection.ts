@@ -1,8 +1,8 @@
 import { fetchFirestoreDocument } from "./firebase/fetchFirestoreDocument";
-import { filterCollectionItems } from "./filterCollectionItems";
 import { getFolder } from "./getFolder";
 import { getQuiz } from "./getQuiz";
 import { Attribute, AttributeValues, CollectionDocument, CollectionItem } from "./Types";
+import { toSlug } from "./toSlug";
 
 const getAttributes = async (env: Env, slug: string): Promise<Attribute[]> => {
   const folder = await getFolder(env, slug);
@@ -30,6 +30,27 @@ const parseAttributeValues = (
   return typedAttributeValues;
 };
 
+const filterItems = (
+  items: Record<string, CollectionItem>,
+  attributes: Attribute[],
+  filters: [string, string][]
+): Record<string, CollectionItem> => {
+  if (filters.length === 0) {
+    return items;
+  }
+  return Object.fromEntries(
+    Object.entries(items).filter(([, item]) =>
+      filters.every(([key, value]) => {
+        const attribute = attributes.find((a) => toSlug(a.name) === key);
+        if (!attribute) {
+          return false;
+        }
+        return toSlug(String(item[attribute.name] ?? "")) === toSlug(value);
+      })
+    )
+  );
+};
+
 const getItems = async (
   env: Env,
   slug: string,
@@ -55,7 +76,7 @@ const getItems = async (
   Object.entries(data.steam ?? {}).forEach(([key, { name, imageUrl, attributes: attributeValues }]) => {
     items[key] = { name, imageUrl, ...parseAttributeValues(attributes, attributeValues) };
   });
-  return filterCollectionItems(items, attributes, filters);
+  return filterItems(items, attributes, filters);
 };
 
 export const getCollection = async (
@@ -63,6 +84,6 @@ export const getCollection = async (
   slug: string,
   filters: [string, string][]
 ): Promise<Record<string, CollectionItem>> => {
-  const collectionAttributes = await getAttributes(env, slug);
-  return getItems(env, slug, collectionAttributes, filters);
+  const attributes = await getAttributes(env, slug);
+  return getItems(env, slug, attributes, filters);
 };

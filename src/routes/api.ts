@@ -8,8 +8,9 @@ export const route = new Hono<{ Bindings: Env }>();
 route.use(cors());
 
 route.get("/collections", async (c) => {
-  const collections = await getFolders(c.env);
-  return c.json(collections);
+  const folders = await getFolders(c.env);
+  const data = folders.map((folder) => folder.name);
+  return c.json({ status: "ok", data });
 });
 
 route.get("/collections/:slug", async (c) => {
