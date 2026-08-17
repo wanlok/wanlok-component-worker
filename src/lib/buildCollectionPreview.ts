@@ -1,4 +1,4 @@
-import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
+import { fetchFirestoreDocument } from "./firebase/fetchFirestoreDocument";
 import { toSlug } from "./toSlug";
 import { humanizeSlug } from "./humanizeSlug";
 import { CloudinaryFileInfo, Folder, Preview, SteamInfo, YouTubeInfo } from "./Types";

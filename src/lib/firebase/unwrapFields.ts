@@ -1,5 +1,5 @@
 import { unwrapValue } from "./unwrapValue";
-import { FirestoreValue } from "./Types";
+import { FirestoreValue } from "../Types";
 
 export const unwrapFields = (fields: Record<string, FirestoreValue> | undefined): Record<string, unknown> => {
   const result: Record<string, unknown> = {};

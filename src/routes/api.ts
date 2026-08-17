@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { fetchFirestoreDocument } from "../lib/fetchFirestoreDocument";
+import { fetchFirestoreDocument } from "../lib/firebase/fetchFirestoreDocument";
 import { getCollectionAttributes } from "../lib/getCollectionAttributes";
 import { getCollectionItems } from "../lib/getCollectionItems";
 import { toSlug } from "../lib/toSlug";

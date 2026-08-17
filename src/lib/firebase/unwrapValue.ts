@@ -1,5 +1,5 @@
 import { unwrapFields } from "./unwrapFields";
-import { FirestoreValue } from "./Types";
+import { FirestoreValue } from "../Types";
 
 export const unwrapValue = (value: FirestoreValue | undefined): unknown => {
   if (!value) {

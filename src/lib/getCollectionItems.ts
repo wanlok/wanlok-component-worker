@@ -1,5 +1,5 @@
 import { applyTypedAttributes } from "./applyTypedAttributes";
-import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
+import { fetchFirestoreDocument } from "./firebase/fetchFirestoreDocument";
 import { filterCollectionItems } from "./filterCollectionItems";
 import { getQuiz } from "./getQuiz";
 import { CollectionAttributes, CollectionDocument, CollectionItem } from "./Types";

@@ -1,5 +1,5 @@
 import { unwrapFields } from "./unwrapFields";
-import { FirestoreValue } from "./Types";
+import { FirestoreValue } from "../Types";
 
 const FIRESTORE_BASE = "https://firestore.googleapis.com/v1";
 
