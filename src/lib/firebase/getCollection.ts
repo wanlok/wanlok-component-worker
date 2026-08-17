@@ -1,8 +1,8 @@
-import { fetchFirestoreDocument } from "./firebase/fetchFirestoreDocument";
-import { getFolder } from "./getFolder";
-import { getQuiz } from "./getQuiz";
-import { Attribute, AttributeValues, CollectionDocument, CollectionItem } from "./Types";
-import { toSlug } from "./toSlug";
+import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
+import { getFolder } from "../getFolder";
+import { getQuestions } from "../getQuestions";
+import { Attribute, AttributeValues, CollectionDocument, CollectionItem } from "../Types";
+import { toSlug } from "../toSlug";
 
 const getAttributes = async (env: Env, slug: string): Promise<Attribute[]> => {
   const folder = await getFolder(env, slug);
@@ -64,8 +64,8 @@ const getItems = async (
   const items: Record<string, CollectionItem> = {};
   Object.entries(data.files ?? {}).forEach(([key, { name, url, attributes: attributeValues, layout, regions }]) => {
     const item = { name, url, ...parseAttributeValues(attributes, attributeValues) };
-    const quiz = getQuiz(layout, regions);
-    items[key] = quiz ? { ...item, quiz } : item;
+    const questions = getQuestions(layout, regions);
+    items[key] = questions ? { ...item, questions } : item;
   });
   Object.entries(data.youtubeRegular ?? {}).forEach(([key, { name, imageUrl, attributes: attributeValues }]) => {
     items[key] = { name, imageUrl, ...parseAttributeValues(attributes, attributeValues) };

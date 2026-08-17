@@ -1,4 +1,4 @@
-import { unwrapFields } from "./unwrapFields";
+import { unwrapValues } from "./unwrapValues";
 import { FirestoreValue } from "../Types";
 
 export const unwrapValue = (value: FirestoreValue | undefined): unknown => {
@@ -21,7 +21,7 @@ export const unwrapValue = (value: FirestoreValue | undefined): unknown => {
     return null;
   }
   if (value.mapValue) {
-    return unwrapFields(value.mapValue.fields);
+    return unwrapValues(value.mapValue.fields);
   }
   if (value.arrayValue) {
     return (value.arrayValue.values ?? []).map(unwrapValue);

@@ -26,9 +26,11 @@ export interface Region {
   correctAnswerIndices?: number[];
 }
 
+export type Quiz = { label: string; value: string };
+
 export type QuizContent = { type: "text" | "image"; value: string };
 
-export type Quiz = { question: QuizContent[]; answers: { content: QuizContent[]; correct: boolean }[] };
+export type Question = { content: QuizContent[]; answers: { content: QuizContent[]; correct: boolean }[] };
 
 export type Attribute = { name: string; type: "text" | "number"; visible?: boolean };
 
@@ -68,7 +70,7 @@ export interface CollectionDocument {
   youtubeShorts: { [key: string]: YouTubeInfo };
 }
 
-export type CollectionItem = Record<string, string | number | Quiz[]>;
+export type CollectionItem = Record<string, string | number | Question[]>;
 
 export type ApiResponse<T> = { status: string; data: T };
 

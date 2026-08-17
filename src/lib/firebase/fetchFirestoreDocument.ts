@@ -1,4 +1,4 @@
-import { unwrapFields } from "./unwrapFields";
+import { unwrapValues } from "./unwrapValues";
 import { FirestoreValue } from "../Types";
 
 const FIRESTORE_BASE = "https://firestore.googleapis.com/v1";
@@ -11,5 +11,5 @@ export const fetchFirestoreDocument = async (env: Env, path: string): Promise<Re
     return undefined;
   }
   const document = (await response.json()) as { fields?: Record<string, FirestoreValue> };
-  return unwrapFields(document.fields);
+  return unwrapValues(document.fields);
 };

@@ -1,5 +1,5 @@
-import { fetchFirestoreDocument } from "./firebase/fetchFirestoreDocument";
-import { Folder } from "./Types";
+import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
+import { Folder } from "../Types";
 
 export const getFolders = async (env: Env): Promise<Folder[]> => {
   const document = await fetchFirestoreDocument(env, "configs/folders");

@@ -1,4 +1,4 @@
-import { getFolders } from "./getFolders";
+import { getFolders } from "./firebase/getFolders";
 import { toSlug } from "./toSlug";
 import { Folder } from "./Types";
 
