@@ -6,7 +6,7 @@ export const getQuizzes = async (env: Env): Promise<Quiz[]> => {
   if (!document) {
     return [];
   }
-  const quizzes = document.quizItems as Quiz[] | undefined;
+  const quizzes = document.quizzes as Quiz[] | undefined;
   if (!quizzes) {
     return [];
   }
