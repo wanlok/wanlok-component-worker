@@ -26,8 +26,6 @@ export interface Region {
   correctAnswerIndices?: number[];
 }
 
-export type Quiz = { label: string; value: string };
-
 export type QuizContent = { type: "text" | "image"; value: string };
 
 export type Question = { content: QuizContent[]; answers: { content: QuizContent[]; correct: boolean }[] };

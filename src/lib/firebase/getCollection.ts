@@ -1,6 +1,7 @@
 import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
 import { getFolder } from "../getFolder";
 import { getQuestions } from "../getQuestions";
+import { getRegions } from "../getRegions";
 import { Attribute, AttributeValues, CollectionDocument, CollectionItem } from "../Types";
 import { toSlug } from "../toSlug";
 
@@ -65,7 +66,9 @@ const getItems = async (
   Object.entries(data.files ?? {}).forEach(([key, { name, url, attributes: attributeValues, layout, regions }]) => {
     const item = { name, url, ...parseAttributeValues(attributes, attributeValues) };
     const questions = getQuestions(layout, regions);
-    items[key] = questions ? { ...item, questions } : item;
+    const itemWithQuestions = questions ? { ...item, questions } : item;
+    const itemRegions = getRegions(layout, regions);
+    items[key] = itemRegions ? { ...itemWithQuestions, regions: itemRegions } : itemWithQuestions;
   });
   Object.entries(data.youtubeRegular ?? {}).forEach(([key, { name, imageUrl, attributes: attributeValues }]) => {
     items[key] = { name, imageUrl, ...parseAttributeValues(attributes, attributeValues) };
