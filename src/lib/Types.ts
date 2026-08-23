@@ -18,7 +18,7 @@ export interface RegionPoint {
 export interface Region {
   points: RegionPoint[];
   recogniseLanguage?: string;
-  recognisedText?: string;
+  text?: string;
   translateLanguage?: string;
   translatedText?: string;
   type?: "question" | "answers";
@@ -85,7 +85,7 @@ export interface CollectionDocument {
   youtubeShorts: { [key: string]: YouTubeInfo };
 }
 
-export type CollectionItem = Record<string, string | number | Question[]>;
+export type CollectionItem = Record<string, string | number | Question[] | Region[]>;
 
 export type ApiResponse<T> = { status: string; data: T };
 

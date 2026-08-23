@@ -38,9 +38,9 @@ export const getQuestions = (layout: string | undefined, regions: Region[] | und
     if (type === "question") {
       const currentEntry = questions[questions.length - 1];
       if (currentEntry && collectingQuestion) {
-        currentEntry.content.push({ type: "text", value: region.recognisedText ?? "" });
+        currentEntry.content.push({ type: "text", value: region.text ?? "" });
       } else {
-        questions.push({ content: [{ type: "text", value: region.recognisedText ?? "" }], answers: [] });
+        questions.push({ content: [{ type: "text", value: region.text ?? "" }], answers: [] });
         collectingQuestion = true;
       }
       return;
@@ -53,7 +53,7 @@ export const getQuestions = (layout: string | undefined, regions: Region[] | und
       return;
     }
     collectingQuestion = false;
-    getQuestionAnswers(region.recognisedText ?? "", region.delimiter ?? "letterDot").forEach((text, i) => {
+    getQuestionAnswers(region.text ?? "", region.delimiter ?? "letterDot").forEach((text, i) => {
       currentEntry.answers.push({
         content: [{ type: "text", value: text }],
         correct: region.correctAnswerIndices?.includes(i) ?? false
