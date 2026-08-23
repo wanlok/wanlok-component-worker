@@ -12,7 +12,7 @@ route.use(cors());
 
 route.get("/collections", async (c) => {
   const folders = await getFolders(c.env);
-  const data = folders.map((folder) => folder.name);
+  const data = folders.map(({ name, counts }) => ({ name, counts }));
   return c.json({ status: "ok", data });
 });
 

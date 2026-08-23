@@ -36,9 +36,24 @@ export type Attribute = { name: string; type: "text" | "number"; visible?: boole
 
 export type AttributeValues = { [key: string]: string };
 
+export type Counts = {
+  chart: number;
+  file: number;
+  hyperlink: number;
+  image: number;
+  pdf: number;
+  quiz: number;
+  region: number;
+  steam: number;
+  video: number;
+  youTubeRegular: number;
+  youTubeShort: number;
+};
+
 export interface Folder {
   name: string;
   attributes: Attribute[];
+  counts: Counts;
 }
 
 interface ParentInfo {
