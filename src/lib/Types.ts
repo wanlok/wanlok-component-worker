@@ -71,6 +71,10 @@ export interface SteamInfo extends ParentInfo {
   imageUrl: string;
 }
 
+export type GamePrice = {
+  price: number;
+};
+
 export interface YouTubeInfo extends ParentInfo {
   name: string;
   imageUrl: string;

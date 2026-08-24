@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { getCollection } from "../lib/firebase/getCollection";
 import { getFolders } from "../lib/firebase/getFolders";
+import { getSteamGamePrice } from "../lib/getSteamGamePrice";
 
 export const route = new Hono<{ Bindings: Env }>();
 
@@ -17,5 +18,11 @@ route.get("/collections/:slug", async (c) => {
   const slug = decodeURIComponent(c.req.param("slug"));
   const filters = [...new URL(c.req.url).searchParams.entries()];
   const data = await getCollection(c.env, slug, filters);
+  return c.json({ status: "ok", data });
+});
+
+route.get("/game-price", async (c) => {
+  const q = c.req.query("q") ?? "";
+  const data = await getSteamGamePrice(q);
   return c.json({ status: "ok", data });
 });
