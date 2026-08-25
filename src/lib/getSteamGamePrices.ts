@@ -11,11 +11,14 @@ type SteamAppDetailsResponse = {
   };
 };
 
-export const getSteamGamePrices = async (appIds: string[]): Promise<(GamePrice | undefined)[]> => {
+export const getSteamGamePrices = async (appIds: string[], currency: string): Promise<(GamePrice | undefined)[]> => {
   if (appIds.length === 0) {
     return [];
   }
-  const response = await fetch(`${STEAM_APP_DETAILS_URL}?appids=${appIds.join(",")}&filters=price_overview&cc=us`);
+  const appids = appIds.join(",");
+  const filters = "price_overview";
+  const cc = currency;
+  const response = await fetch(`${STEAM_APP_DETAILS_URL}?appids=${appids}&filters=${filters}&cc=${cc}`);
   if (!response.ok) {
     return appIds.map(() => undefined);
   }
@@ -26,7 +29,7 @@ export const getSteamGamePrices = async (appIds: string[]): Promise<(GamePrice |
       return undefined;
     }
     return {
-      price: priceOverview.final
+      price: priceOverview.final / 100
     };
   });
 };
