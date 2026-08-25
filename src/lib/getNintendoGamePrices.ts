@@ -8,6 +8,9 @@ type NintendoPriceResponse = {
     regular_price?: {
       raw_value: string;
     };
+    discount_price?: {
+      raw_value: string;
+    };
   }[];
 };
 
@@ -27,12 +30,13 @@ export const getNintendoGamePrices = async (
   }
   const { prices } = (await response.json()) as NintendoPriceResponse;
   return titleIds.map((titleId) => {
-    const regularPrice = prices.find((price) => String(price.title_id) === titleId)?.regular_price;
-    if (!regularPrice) {
+    const price = prices.find(({ title_id }) => String(title_id) === titleId);
+    const rawValue = price?.discount_price?.raw_value ?? price?.regular_price?.raw_value;
+    if (!rawValue) {
       return undefined;
     }
     return {
-      price: Number(regularPrice.raw_value)
+      price: Number(rawValue)
     };
   });
 };
