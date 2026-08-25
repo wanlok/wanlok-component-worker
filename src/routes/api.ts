@@ -2,8 +2,8 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { getCollection } from "../lib/firebase/getCollection";
 import { getFolders } from "../lib/firebase/getFolders";
-import { getNintendoGamePrice } from "../lib/getNintendoGamePrice";
-import { getSteamGamePrice } from "../lib/getSteamGamePrice";
+import { getNintendoGamePrice } from "../lib/gamePrice/getNintendoGamePrice";
+import { getSteamGamePrice } from "../lib/gamePrice/getSteamGamePrice";
 
 export const route = new Hono<{ Bindings: Env }>();
 

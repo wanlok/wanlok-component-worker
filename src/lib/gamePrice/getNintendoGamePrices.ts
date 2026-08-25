@@ -1,4 +1,4 @@
-import { GamePrice } from "./Types";
+import { GamePrice } from "../Types";
 
 const NINTENDO_PRICE_URL = "https://api.ec.nintendo.com/v1/price";
 

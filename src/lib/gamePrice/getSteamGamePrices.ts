@@ -1,4 +1,4 @@
-import { GamePrice } from "./Types";
+import { GamePrice } from "../Types";
 
 const STEAM_APP_DETAILS_URL = "https://store.steampowered.com/api/appdetails";
 

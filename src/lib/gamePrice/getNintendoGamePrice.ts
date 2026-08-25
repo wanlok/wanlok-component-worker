@@ -1,6 +1,6 @@
 import { extractNintendoTitleId } from "./extractNintendoTitleId";
 import { getNintendoGamePrices } from "./getNintendoGamePrices";
-import { GamePrice } from "./Types";
+import { GamePrice } from "../Types";
 
 export const getNintendoGamePrice = async (urlString: string, currency: string): Promise<GamePrice | undefined> => {
   if (!urlString.includes("nintendo.com")) {
