@@ -1,9 +1,10 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { addGame } from "../lib/firebase/addGame";
 import { getCollection } from "../lib/firebase/getCollection";
 import { getFolders } from "../lib/firebase/getFolders";
 import { getGames } from "../lib/firebase/getGames";
+import { postGame } from "../lib/firebase/postGame";
+import { putGames } from "../lib/firebase/putGames";
 
 export const route = new Hono<{ Bindings: Env }>();
 
@@ -29,6 +30,11 @@ route.get("/games", async (c) => {
 
 route.post("/games", async (c) => {
   const { name, url } = await c.req.json<{ name: string; url: string }>();
-  const data = await addGame(c.env, name, url);
+  const data = await postGame(c.env, name, url);
+  return c.json({ status: "ok", data });
+});
+
+route.put("/games", async (c) => {
+  const data = await putGames(c.env);
   return c.json({ status: "ok", data });
 });
