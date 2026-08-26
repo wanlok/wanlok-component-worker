@@ -1,5 +1,3 @@
-import { GamePrice } from "../Types";
-
 const NINTENDO_PRICE_URL = "https://api.ec.nintendo.com/v1/price";
 
 type NintendoPriceResponse = {
@@ -14,10 +12,7 @@ type NintendoPriceResponse = {
   }[];
 };
 
-export const getNintendoGamePrices = async (
-  titleIds: string[],
-  currency: string
-): Promise<(GamePrice | undefined)[]> => {
+export const getNintendoGamePrices = async (titleIds: string[], currency: string): Promise<(number | undefined)[]> => {
   if (titleIds.length === 0) {
     return [];
   }
@@ -35,8 +30,6 @@ export const getNintendoGamePrices = async (
     if (!rawValue) {
       return undefined;
     }
-    return {
-      price: Number(rawValue)
-    };
+    return Number(rawValue);
   });
 };

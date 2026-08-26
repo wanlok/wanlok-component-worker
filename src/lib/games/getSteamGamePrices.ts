@@ -1,5 +1,3 @@
-import { GamePrice } from "../Types";
-
 const STEAM_APP_DETAILS_URL = "https://store.steampowered.com/api/appdetails";
 
 type SteamAppDetailsResponse = {
@@ -11,7 +9,7 @@ type SteamAppDetailsResponse = {
   };
 };
 
-export const getSteamGamePrices = async (appIds: string[], currency: string): Promise<(GamePrice | undefined)[]> => {
+export const getSteamGamePrices = async (appIds: string[], currency: string): Promise<(number | undefined)[]> => {
   if (appIds.length === 0) {
     return [];
   }
@@ -28,8 +26,6 @@ export const getSteamGamePrices = async (appIds: string[], currency: string): Pr
     if (!priceOverview) {
       return undefined;
     }
-    return {
-      price: priceOverview.final / 100
-    };
+    return priceOverview.final / 100;
   });
 };

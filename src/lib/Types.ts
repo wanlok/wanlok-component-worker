@@ -71,12 +71,10 @@ export interface SteamInfo extends ParentInfo {
   imageUrl: string;
 }
 
-export type GamePrice = {
-  price: number;
-};
-
 export type Game = {
-  name: string;
+  aud?: { id: string; prices: { datetime: string; price: number }[] };
+  hkd?: { id: string; prices: { datetime: string; price: number }[] };
+  rmb?: { id: string; prices: { datetime: string; price: number }[] };
 };
 
 export type Games = {
