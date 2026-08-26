@@ -75,6 +75,15 @@ export type GamePrice = {
   price: number;
 };
 
+export type Game = {
+  name: string;
+};
+
+export type Games = {
+  nintendo: Record<string, Game>;
+  steam: Record<string, Game>;
+};
+
 export interface YouTubeInfo extends ParentInfo {
   name: string;
   imageUrl: string;

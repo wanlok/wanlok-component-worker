@@ -1,9 +1,10 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { addGame } from "../lib/firebase/addGame";
 import { getCollection } from "../lib/firebase/getCollection";
 import { getFolders } from "../lib/firebase/getFolders";
-import { getNintendoGamePrice } from "../lib/gamePrice/getNintendoGamePrice";
-import { getSteamGamePrice } from "../lib/gamePrice/getSteamGamePrice";
+import { getNintendoGamePrice } from "../lib/games/getNintendoGamePrice";
+import { getSteamGamePrice } from "../lib/games/getSteamGamePrice";
 
 export const route = new Hono<{ Bindings: Env }>();
 
@@ -30,5 +31,11 @@ route.get("/game-price", async (c) => {
   if (!data) {
     data = await getSteamGamePrice(q, currency);
   }
+  return c.json({ status: "ok", data });
+});
+
+route.post("/games", async (c) => {
+  const { name, url } = await c.req.json<{ name: string; url: string }>();
+  const data = await addGame(c.env, name, url);
   return c.json({ status: "ok", data });
 });
