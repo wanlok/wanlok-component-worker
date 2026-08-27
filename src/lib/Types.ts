@@ -77,7 +77,9 @@ export type Game = {
   rmb?: { id: string; prices: { datetime: string; price: number }[] };
 };
 
-export type Platform = "nintendo" | "steam";
+export const PLATFORMS = ["nintendo", "steam"] as const;
+
+export type Platform = (typeof PLATFORMS)[number];
 
 export type Games = Record<Platform, Record<string, Game>>;
 

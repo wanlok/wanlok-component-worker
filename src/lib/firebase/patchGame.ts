@@ -1,6 +1,6 @@
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "./writeFirestoreDocument";
-import { ApiResponse, Games, Platform } from "../Types";
+import { ApiResponse, Games, Platform, PLATFORMS } from "../Types";
 
 export const patchGame = async (
   env: Env,
@@ -8,6 +8,9 @@ export const patchGame = async (
   name: string,
   newName: string
 ): Promise<ApiResponse<Games>> => {
+  if (!PLATFORMS.includes(platform)) {
+    return { status: "error", message: `Invalid platform: ${platform}` };
+  }
   const response = await getGames(env);
   if (response.status === "error") {
     return response;
