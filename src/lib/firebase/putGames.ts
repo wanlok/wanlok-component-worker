@@ -3,10 +3,14 @@ import { getNintendoGamePrices } from "../games/getNintendoGamePrices";
 import { getSteamGamePrices } from "../games/getSteamGamePrices";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "./writeFirestoreDocument";
-import { Games } from "../Types";
+import { ApiResponse, Games } from "../Types";
 
-export const putGames = async (env: Env): Promise<Games> => {
-  const games = await getGames(env);
+export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
+  const response = await getGames(env);
+  if (response.status === "error") {
+    return response;
+  }
+  const games = response.data;
   const datetime = new Date().toISOString();
 
   for (const currency of CURRENCIES) {
@@ -54,5 +58,5 @@ export const putGames = async (env: Env): Promise<Games> => {
   }
 
   await writeFirestoreDocument(env, "configs/games", games);
-  return games;
+  return { status: "ok", data: games };
 };

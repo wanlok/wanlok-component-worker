@@ -95,7 +95,7 @@ export interface CollectionDocument {
 
 export type CollectionItem = Record<string, string | number | Question[] | Region[]>;
 
-export type ApiResponse<T> = { status: string; data: T };
+export type ApiResponse<T> = { status: "ok"; data: T } | { status: "error"; message: string };
 
 export interface Preview {
   title: string;

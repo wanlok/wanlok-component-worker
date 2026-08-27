@@ -2,7 +2,7 @@ import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
 import { getFolder } from "../getFolder";
 import { getQuestions } from "../getQuestions";
 import { getRegions } from "../getRegions";
-import { Attribute, AttributeValues, CollectionDocument, CollectionItem } from "../Types";
+import { ApiResponse, Attribute, AttributeValues, CollectionDocument, CollectionItem } from "../Types";
 import { toSlug } from "../toSlug";
 
 const getAttributes = async (env: Env, slug: string): Promise<Attribute[]> => {
@@ -86,7 +86,8 @@ export const getCollection = async (
   env: Env,
   slug: string,
   filters: [string, string][]
-): Promise<Record<string, CollectionItem>> => {
+): Promise<ApiResponse<Record<string, CollectionItem>>> => {
   const attributes = await getAttributes(env, slug);
-  return getItems(env, slug, attributes, filters);
+  const items = await getItems(env, slug, attributes, filters);
+  return { status: "ok", data: items };
 };

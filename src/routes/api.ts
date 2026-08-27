@@ -13,36 +13,39 @@ export const route = new Hono<{ Bindings: Env }>();
 route.use(cors());
 
 route.get("/collections", async (c) => {
-  const folders = await getFolders(c.env);
-  const data = folders.map(({ name, counts }) => ({ name, counts }));
+  const response = await getFolders(c.env);
+  if (response.status === "error") {
+    return c.json(response);
+  }
+  const data = response.data.map(({ name, counts }) => ({ name, counts }));
   return c.json({ status: "ok", data });
 });
 
 route.get("/collections/:slug", async (c) => {
   const slug = decodeURIComponent(c.req.param("slug"));
   const filters = [...new URL(c.req.url).searchParams.entries()];
-  const data = await getCollection(c.env, slug, filters);
-  return c.json({ status: "ok", data });
+  const response = await getCollection(c.env, slug, filters);
+  return c.json(response);
 });
 
 route.get("/games", async (c) => {
-  const data = await getGames(c.env);
-  return c.json({ status: "ok", data });
+  const response = await getGames(c.env);
+  return c.json(response);
 });
 
 route.post("/games", async (c) => {
   const { name, url } = await c.req.json<{ name: string; url: string }>();
-  const data = await postGame(c.env, name, url);
-  return c.json({ status: "ok", data });
+  const response = await postGame(c.env, name, url);
+  return c.json(response);
 });
 
 route.put("/games", async (c) => {
-  const data = await putGames(c.env);
-  return c.json({ status: "ok", data });
+  const response = await putGames(c.env);
+  return c.json(response);
 });
 
 route.patch("/games", async (c) => {
   const { platform, name, newName } = await c.req.json<{ platform: Platform; name: string; newName: string }>();
-  const data = await patchGame(c.env, platform, name, newName);
-  return c.json({ status: "ok", data });
+  const response = await patchGame(c.env, platform, name, newName);
+  return c.json(response);
 });

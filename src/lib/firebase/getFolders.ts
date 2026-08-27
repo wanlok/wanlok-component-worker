@@ -1,14 +1,8 @@
 import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
-import { Folder } from "../Types";
+import { ApiResponse, Folder } from "../Types";
 
-export const getFolders = async (env: Env): Promise<Folder[]> => {
+export const getFolders = async (env: Env): Promise<ApiResponse<Folder[]>> => {
   const document = await fetchFirestoreDocument(env, "configs/folders");
-  if (!document) {
-    return [];
-  }
-  const folders = document.folders as Folder[] | undefined;
-  if (!folders) {
-    return [];
-  }
-  return folders;
+  const folders = (document?.folders as Folder[] | undefined) ?? [];
+  return { status: "ok", data: folders };
 };

@@ -3,6 +3,9 @@ import { toSlug } from "./toSlug";
 import { Folder } from "./Types";
 
 export const getFolder = async (env: Env, slug: string): Promise<Folder | undefined> => {
-  const folders = await getFolders(env);
-  return folders.find((folder) => toSlug(folder.name) === slug);
+  const response = await getFolders(env);
+  if (response.status === "error") {
+    return undefined;
+  }
+  return response.data.find((folder) => toSlug(folder.name) === slug);
 };

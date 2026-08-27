@@ -6,10 +6,14 @@ import { getNintendoGamePrices } from "../games/getNintendoGamePrices";
 import { getSteamGamePrices } from "../games/getSteamGamePrices";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "./writeFirestoreDocument";
-import { Games } from "../Types";
+import { ApiResponse, Games } from "../Types";
 
-export const postGame = async (env: Env, name: string, url: string): Promise<Games> => {
-  const games = await getGames(env);
+export const postGame = async (env: Env, name: string, url: string): Promise<ApiResponse<Games>> => {
+  const response = await getGames(env);
+  if (response.status === "error") {
+    return response;
+  }
+  const games = response.data;
   if (url.includes("nintendo.com")) {
     const titleId = extractNintendoTitleId(url);
     const currency = extractNintendoCurrency(url);
@@ -32,5 +36,5 @@ export const postGame = async (env: Env, name: string, url: string): Promise<Gam
     }
   }
   await writeFirestoreDocument(env, "configs/games", games);
-  return games;
+  return { status: "ok", data: games };
 };
