@@ -77,10 +77,9 @@ export type Game = {
   rmb?: { id: string; prices: { datetime: string; price: number }[] };
 };
 
-export type Games = {
-  nintendo: Record<string, Game>;
-  steam: Record<string, Game>;
-};
+export type Platform = "nintendo" | "steam";
+
+export type Games = Record<Platform, Record<string, Game>>;
 
 export interface YouTubeInfo extends ParentInfo {
   name: string;

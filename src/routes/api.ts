@@ -5,6 +5,8 @@ import { getFolders } from "../lib/firebase/getFolders";
 import { getGames } from "../lib/firebase/getGames";
 import { postGame } from "../lib/firebase/postGame";
 import { putGames } from "../lib/firebase/putGames";
+import { patchGame } from "../lib/firebase/patchGame";
+import { Platform } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
 
@@ -36,5 +38,11 @@ route.post("/games", async (c) => {
 
 route.put("/games", async (c) => {
   const data = await putGames(c.env);
+  return c.json({ status: "ok", data });
+});
+
+route.patch("/games", async (c) => {
+  const { platform, name, newName } = await c.req.json<{ platform: Platform; name: string; newName: string }>();
+  const data = await patchGame(c.env, platform, name, newName);
   return c.json({ status: "ok", data });
 });
