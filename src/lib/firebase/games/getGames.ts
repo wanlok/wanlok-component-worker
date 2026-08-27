@@ -1,5 +1,5 @@
-import { fetchFirestoreDocument } from "./fetchFirestoreDocument";
-import { ApiResponse, Game, Games } from "../Types";
+import { fetchFirestoreDocument } from "../fetchFirestoreDocument";
+import { ApiResponse, Game, Games } from "../../Types";
 
 export const getGames = async (env: Env): Promise<ApiResponse<Games>> => {
   const document = await fetchFirestoreDocument(env, "configs/games");

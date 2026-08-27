@@ -1,9 +1,8 @@
-import { CURRENCIES, COUNTRIES } from "../games/currencies";
-import { getNintendoGamePrices } from "../games/getNintendoGamePrices";
-import { getSteamGamePrices } from "../games/getSteamGamePrices";
+import { getNintendoGamePrices } from "../../games/getNintendoGamePrices";
+import { getSteamGamePrices } from "../../games/getSteamGamePrices";
 import { getGames } from "./getGames";
-import { writeFirestoreDocument } from "./writeFirestoreDocument";
-import { ApiResponse, Games } from "../Types";
+import { writeFirestoreDocument } from "../writeFirestoreDocument";
+import { ApiResponse, COUNTRIES, CURRENCY_CODES, Games } from "../../Types";
 
 export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
   const response = await getGames(env);
@@ -13,7 +12,7 @@ export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
   const games = response.data;
   const datetime = new Date().toISOString();
 
-  for (const currency of CURRENCIES) {
+  for (const currency of CURRENCY_CODES) {
     const names: string[] = [];
     const ids: string[] = [];
     for (const [name, game] of Object.entries(games.nintendo)) {
@@ -35,7 +34,7 @@ export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
     });
   }
 
-  for (const currency of CURRENCIES) {
+  for (const currency of CURRENCY_CODES) {
     const names: string[] = [];
     const ids: string[] = [];
     for (const [name, game] of Object.entries(games.steam)) {

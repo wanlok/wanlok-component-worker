@@ -1,12 +1,11 @@
-import { COUNTRIES } from "../games/currencies";
-import { extractNintendoCurrency } from "../games/extractNintendoCurrency";
-import { extractNintendoTitleId } from "../games/extractNintendoTitleId";
-import { extractSteamAppId } from "../games/extractSteamAppId";
-import { getNintendoGamePrices } from "../games/getNintendoGamePrices";
-import { getSteamGamePrices } from "../games/getSteamGamePrices";
+import { extractNintendoCurrency } from "../../games/extractNintendoCurrency";
+import { extractNintendoTitleId } from "../../games/extractNintendoTitleId";
+import { extractSteamAppId } from "../../games/extractSteamAppId";
+import { getNintendoGamePrices } from "../../games/getNintendoGamePrices";
+import { getSteamGamePrices } from "../../games/getSteamGamePrices";
 import { getGames } from "./getGames";
-import { writeFirestoreDocument } from "./writeFirestoreDocument";
-import { ApiResponse, Games } from "../Types";
+import { writeFirestoreDocument } from "../writeFirestoreDocument";
+import { ApiResponse, COUNTRIES, Games } from "../../Types";
 
 export const postGame = async (env: Env, name: string, url: string): Promise<ApiResponse<Games>> => {
   const response = await getGames(env);

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { putGames } from "./lib/firebase/putGames";
+import { putGames } from "./lib/firebase/games/putGames";
 import { route as shareRoute } from "./routes/share";
 import { route as apiRoute } from "./routes/api";
 

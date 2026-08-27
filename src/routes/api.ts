@@ -2,10 +2,11 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { getCollection } from "../lib/firebase/getCollection";
 import { getFolders } from "../lib/firebase/getFolders";
-import { getGames } from "../lib/firebase/getGames";
-import { postGame } from "../lib/firebase/postGame";
-import { putGames } from "../lib/firebase/putGames";
-import { patchGame } from "../lib/firebase/patchGame";
+import { getGames } from "../lib/firebase/games/getGames";
+import { postGame } from "../lib/firebase/games/postGame";
+import { putGames } from "../lib/firebase/games/putGames";
+import { patchGame } from "../lib/firebase/games/patchGame";
+import { deleteGame } from "../lib/firebase/games/deleteGame";
 import { Platform } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
@@ -47,5 +48,11 @@ route.put("/games", async (c) => {
 route.patch("/games", async (c) => {
   const { platform, name, newName } = await c.req.json<{ platform: Platform; name: string; newName: string }>();
   const response = await patchGame(c.env, platform, name, newName);
+  return c.json(response);
+});
+
+route.delete("/games", async (c) => {
+  const { platform, name } = await c.req.json<{ platform: Platform; name: string }>();
+  const response = await deleteGame(c.env, platform, name);
   return c.json(response);
 });
