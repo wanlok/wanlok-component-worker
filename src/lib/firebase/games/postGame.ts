@@ -1,5 +1,6 @@
 import { extractNintendoCurrency } from "../../games/extractNintendoCurrency";
 import { extractNintendoTitleId } from "../../games/extractNintendoTitleId";
+import { extractNintendoUrlType } from "../../games/extractNintendoUrlType";
 import { extractSteamAppId } from "../../games/extractSteamAppId";
 import { getNintendoGamePrices } from "../../games/getNintendoGamePrices";
 import { getSteamGamePrices } from "../../games/getSteamGamePrices";
@@ -16,10 +17,11 @@ export const postGame = async (env: Env, name: string, url: string): Promise<Api
   if (url.includes("nintendo.com")) {
     const titleId = extractNintendoTitleId(url);
     const currency = extractNintendoCurrency(url);
+    const type = extractNintendoUrlType(url);
     if (titleId && currency) {
       const [price] = await getNintendoGamePrices([titleId], COUNTRIES[currency]);
       const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
-      games.nintendo[name] = { ...games.nintendo[name], [currency]: { id: titleId, prices } };
+      games.nintendo[name] = { ...games.nintendo[name], [currency]: { id: titleId, type, prices } };
     }
   } else if (url.includes("steampowered.com")) {
     const appId = extractSteamAppId(url);

@@ -79,10 +79,16 @@ export const COUNTRIES: Record<(typeof CURRENCY_CODES)[number], string> = {
   rmb: "CN"
 };
 
+export type GameEntry = {
+  id: string;
+  type?: "titles" | "bundles";
+  prices: { datetime: string; price: number }[];
+};
+
 export type Game = {
-  aud?: { id: string; prices: { datetime: string; price: number }[] };
-  hkd?: { id: string; prices: { datetime: string; price: number }[] };
-  rmb?: { id: string; prices: { datetime: string; price: number }[] };
+  aud?: GameEntry;
+  hkd?: GameEntry;
+  rmb?: GameEntry;
 };
 
 export const PLATFORMS = ["nintendo", "steam"] as const;
