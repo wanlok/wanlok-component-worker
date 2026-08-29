@@ -2,7 +2,16 @@ import { getNintendoGamePrices } from "../../games/getNintendoGamePrices";
 import { getSteamGamePrices } from "../../games/getSteamGamePrices";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "../writeFirestoreDocument";
-import { ApiResponse, COUNTRIES, CURRENCY_CODES, Games } from "../../Types";
+import { ApiResponse, COUNTRIES, CURRENCY_CODES, GameEntry, Games } from "../../Types";
+
+const recordPrice = (entry: GameEntry, datetime: string, price: number): void => {
+  const date = datetime.slice(0, 10);
+  const last = entry.prices[entry.prices.length - 1];
+  if (last?.datetime.slice(0, 10) === date) {
+    entry.prices.pop();
+  }
+  entry.prices.push({ datetime, price });
+};
 
 export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
   const response = await getGames(env);
@@ -28,8 +37,9 @@ export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
     const prices = await getNintendoGamePrices(ids, COUNTRIES[currency]);
     names.forEach((name, index) => {
       const price = prices[index];
-      if (price !== undefined) {
-        games.nintendo[name][currency]?.prices.push({ datetime, price });
+      const entry = games.nintendo[name][currency];
+      if (price !== undefined && entry) {
+        recordPrice(entry, datetime, price);
       }
     });
   }
@@ -50,8 +60,9 @@ export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
     const prices = await getSteamGamePrices(ids, COUNTRIES[currency]);
     names.forEach((name, index) => {
       const price = prices[index];
-      if (price !== undefined) {
-        games.steam[name][currency]?.prices.push({ datetime, price });
+      const entry = games.steam[name][currency];
+      if (price !== undefined && entry) {
+        recordPrice(entry, datetime, price);
       }
     });
   }
