@@ -6,7 +6,7 @@ import { getNintendoGamePrices } from "../../games/getNintendoGamePrices";
 import { getSteamGamePrices } from "../../games/getSteamGamePrices";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "../writeFirestoreDocument";
-import { ApiResponse, COUNTRIES, Games } from "../../Types";
+import { ApiResponse, COUNTRIES, CURRENCY_CODES, Game, Games } from "../../Types";
 
 export const postGame = async (env: Env, name: string, url: string): Promise<ApiResponse<Games>> => {
   const response = await getGames(env);
@@ -26,14 +26,13 @@ export const postGame = async (env: Env, name: string, url: string): Promise<Api
   } else if (url.includes("steampowered.com")) {
     const appId = extractSteamAppId(url);
     if (appId) {
-      const [aud] = await getSteamGamePrices([appId], COUNTRIES.aud);
-      const [hkd] = await getSteamGamePrices([appId], COUNTRIES.hkd);
-      const [rmb] = await getSteamGamePrices([appId], COUNTRIES.rmb);
-      games.steam[name] = {
-        aud: { id: appId, prices: aud !== undefined ? [{ datetime: new Date().toISOString(), price: aud }] : [] },
-        hkd: { id: appId, prices: hkd !== undefined ? [{ datetime: new Date().toISOString(), price: hkd }] : [] },
-        rmb: { id: appId, prices: rmb !== undefined ? [{ datetime: new Date().toISOString(), price: rmb }] : [] }
-      };
+      const game: Game = {};
+      for (const currency of CURRENCY_CODES) {
+        const [price] = await getSteamGamePrices([appId], COUNTRIES[currency]);
+        const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
+        game[currency] = { id: appId, prices };
+      }
+      games.steam[name] = game;
     }
   }
   await writeFirestoreDocument(env, "configs/games", games);
