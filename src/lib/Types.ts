@@ -80,10 +80,14 @@ export const COUNTRIES: Record<(typeof CURRENCY_CODES)[number], string> = {
   rmb: "CN"
 };
 
+export type GamePrice = { datetime: string; price: number };
+
 export type GameEntry = {
   id: string;
   type?: "titles" | "bundles";
-  prices: { datetime: string; price: number }[];
+  prices: GamePrice[];
+  lowest?: GamePrice;
+  highest?: GamePrice;
 };
 
 export type Game = {

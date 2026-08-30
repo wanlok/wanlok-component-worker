@@ -21,7 +21,11 @@ export const postGame = async (env: Env, name: string, url: string): Promise<Api
     if (titleId && currency) {
       const [price] = await getNintendoGamePrices([titleId], COUNTRIES[currency]);
       const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
-      games.nintendo[name] = { ...games.nintendo[name], [currency]: { id: titleId, type, prices } };
+      const [point] = prices;
+      games.nintendo[name] = {
+        ...games.nintendo[name],
+        [currency]: { id: titleId, type, prices, lowest: point, highest: point }
+      };
     }
   } else if (url.includes("steampowered.com")) {
     const appId = extractSteamAppId(url);
@@ -30,7 +34,8 @@ export const postGame = async (env: Env, name: string, url: string): Promise<Api
       for (const currency of CURRENCY_CODES) {
         const [price] = await getSteamGamePrices([appId], COUNTRIES[currency]);
         const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
-        game[currency] = { id: appId, prices };
+        const [point] = prices;
+        game[currency] = { id: appId, prices, lowest: point, highest: point };
       }
       games.steam[name] = game;
     }
