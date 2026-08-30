@@ -18,27 +18,31 @@ export const postGame = async (env: Env, name: string, url: string): Promise<Api
     const titleId = await extractNintendoTitleId(url);
     const currency = extractNintendoCurrency(url);
     const type = extractNintendoUrlType(url);
-    if (titleId && currency) {
-      const [price] = await getNintendoGamePrices([titleId], COUNTRIES[currency]);
-      const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
-      const [point] = prices;
-      games.nintendo[name] = {
-        ...games.nintendo[name],
-        [currency]: { id: titleId, type, prices, lowest: point, highest: point }
-      };
+    if (!titleId || !currency) {
+      return { status: "error", message: "Could not determine the Nintendo title id or currency for this URL" };
     }
+    const [price] = await getNintendoGamePrices([titleId], COUNTRIES[currency]);
+    const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
+    const [point] = prices;
+    games.nintendo[name] = {
+      ...games.nintendo[name],
+      [currency]: { id: titleId, type, prices, lowest: point, highest: point }
+    };
   } else if (url.includes("steampowered.com")) {
     const appId = extractSteamAppId(url);
-    if (appId) {
-      const game: Game = {};
-      for (const currency of CURRENCY_CODES) {
-        const [price] = await getSteamGamePrices([appId], COUNTRIES[currency]);
-        const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
-        const [point] = prices;
-        game[currency] = { id: appId, prices, lowest: point, highest: point };
-      }
-      games.steam[name] = game;
+    if (!appId) {
+      return { status: "error", message: "Could not determine the Steam app id for this URL" };
     }
+    const game: Game = {};
+    for (const currency of CURRENCY_CODES) {
+      const [price] = await getSteamGamePrices([appId], COUNTRIES[currency]);
+      const prices = price !== undefined ? [{ datetime: new Date().toISOString(), price }] : [];
+      const [point] = prices;
+      game[currency] = { id: appId, prices, lowest: point, highest: point };
+    }
+    games.steam[name] = game;
+  } else {
+    return { status: "error", message: "Invalid URL" };
   }
   await writeFirestoreDocument(env, "configs/games", games);
   return { status: "ok", data: games };
