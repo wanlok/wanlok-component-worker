@@ -71,13 +71,12 @@ export interface SteamInfo extends ParentInfo {
   imageUrl: string;
 }
 
-export const CURRENCY_CODES = ["aud", "cad", "hkd", "rmb"] as const;
+export const CURRENCY_CODES = ["aud", "cad", "hkd"] as const;
 
 export const COUNTRIES: Record<(typeof CURRENCY_CODES)[number], string> = {
   aud: "AU",
   cad: "CA",
-  hkd: "HK",
-  rmb: "CN"
+  hkd: "HK"
 };
 
 export type GamePrice = { datetime: string; price: number };
@@ -94,7 +93,6 @@ export type Game = {
   aud?: GameEntry;
   cad?: GameEntry;
   hkd?: GameEntry;
-  rmb?: GameEntry;
 };
 
 export const PLATFORMS = ["nintendo", "steam"] as const;

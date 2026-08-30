@@ -1,11 +1,10 @@
-const COUNTRY_CURRENCIES: Record<string, "aud" | "cad" | "hkd" | "rmb"> = {
+const COUNTRY_CURRENCIES: Record<string, "aud" | "cad" | "hkd"> = {
   AU: "aud",
   CA: "cad",
-  HK: "hkd",
-  CN: "rmb"
+  HK: "hkd"
 };
 
-export const extractNintendoCurrency = (url: string): "aud" | "cad" | "hkd" | "rmb" | undefined => {
+export const extractNintendoCurrency = (url: string): "aud" | "cad" | "hkd" | undefined => {
   if (url.includes("nintendo.com.hk")) {
     return "hkd";
   }
