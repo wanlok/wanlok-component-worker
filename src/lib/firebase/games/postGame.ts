@@ -15,7 +15,7 @@ export const postGame = async (env: Env, name: string, url: string): Promise<Api
   }
   const games = response.data;
   if (url.includes("nintendo.com")) {
-    const titleId = extractNintendoTitleId(url);
+    const titleId = await extractNintendoTitleId(url);
     const currency = extractNintendoCurrency(url);
     const type = extractNintendoUrlType(url);
     if (titleId && currency) {
