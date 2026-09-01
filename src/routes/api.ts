@@ -2,11 +2,12 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { getCollection } from "../lib/firebase/getCollection";
 import { getFolders } from "../lib/firebase/getFolders";
-import { getGames } from "../lib/firebase/games/getGames";
-import { postGame } from "../lib/firebase/games/postGame";
-import { putGames } from "../lib/firebase/games/putGames";
-import { patchGame } from "../lib/firebase/games/patchGame";
-import { deleteGame } from "../lib/firebase/games/deleteGame";
+import { getGames } from "../lib/firebase/products/getGames";
+import { postGame } from "../lib/firebase/products/postGame";
+import { putGames } from "../lib/firebase/products/putGames";
+import { patchGame } from "../lib/firebase/products/patchGame";
+import { deleteGame } from "../lib/firebase/products/deleteGame";
+import { getProducts } from "../lib/products/getProducts";
 import { Platform } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
@@ -55,4 +56,9 @@ route.delete("/games", async (c) => {
   const { platform, name } = await c.req.json<{ platform: Platform; name: string }>();
   const response = await deleteGame(c.env, platform, name);
   return c.json(response);
+});
+
+route.get("/products", async (c) => {
+  const product = await getProducts(c.req.query("url"));
+  return c.json({ status: "ok", data: product });
 });

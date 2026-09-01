@@ -1,0 +1,22 @@
+import { BROWSER_HEADERS } from "../Constants";
+import { Product } from "../Types";
+
+const decodeHTMLEntities = (value: string): string =>
+  value.replace(/&#x27;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"');
+
+export const getColesPrice = async (url: string): Promise<Product | null> => {
+  if (!url.includes("coles.com.au")) {
+    return null;
+  }
+  const response = await fetch(url, { headers: BROWSER_HEADERS });
+  if (!response.ok) {
+    return null;
+  }
+  const html = await response.text();
+  const name = html.match(/data-testid="title">([^<]*)</)?.[1];
+  const price = html.match(/aria-label="Price \$([\d.]+)"/)?.[1];
+  if (!name || !price) {
+    return null;
+  }
+  return { name: decodeHTMLEntities(name), price: Number(price) };
+};

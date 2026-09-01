@@ -71,6 +71,11 @@ export interface SteamInfo extends ParentInfo {
   imageUrl: string;
 }
 
+export type Product = {
+  name: string;
+  price: number;
+};
+
 export const CURRENCY_CODES = ["aud", "cad", "hkd"] as const;
 
 export const COUNTRIES: Record<(typeof CURRENCY_CODES)[number], string> = {

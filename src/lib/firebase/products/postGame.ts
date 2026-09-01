@@ -1,9 +1,9 @@
-import { extractNintendoCurrency } from "../../games/extractNintendoCurrency";
-import { extractNintendoTitleId } from "../../games/extractNintendoTitleId";
-import { extractNintendoUrlType } from "../../games/extractNintendoUrlType";
-import { extractSteamAppId } from "../../games/extractSteamAppId";
-import { getNintendoGamePrices } from "../../games/getNintendoGamePrices";
-import { getSteamGamePrices } from "../../games/getSteamGamePrices";
+import { extractNintendoCurrency } from "../../products/extractNintendoCurrency";
+import { extractNintendoTitleId } from "../../products/extractNintendoTitleId";
+import { extractNintendoUrlType } from "../../products/extractNintendoUrlType";
+import { extractSteamAppId } from "../../products/extractSteamAppId";
+import { getNintendoGamePrices } from "../../products/getNintendoGamePrices";
+import { getSteamGamePrices } from "../../products/getSteamGamePrices";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "../writeFirestoreDocument";
 import { ApiResponse, COUNTRIES, CURRENCY_CODES, Game, Games } from "../../Types";

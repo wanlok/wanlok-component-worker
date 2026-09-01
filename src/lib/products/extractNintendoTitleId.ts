@@ -1,3 +1,5 @@
+import { BROWSER_HEADERS } from "../Constants";
+
 const extractProductSlug = (url: string): string | undefined => url.match(/\/store\/products\/([^/?]+)/)?.[1];
 
 const extractIdFromHtml = (html: string, slug: string | undefined): string | undefined => {
@@ -17,14 +19,7 @@ export const extractNintendoTitleId = async (url: string): Promise<string | unde
     return embeddedId;
   }
 
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
-      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.9"
-    }
-  });
+  const response = await fetch(url, { headers: BROWSER_HEADERS });
   if (!response.ok) {
     return undefined;
   }

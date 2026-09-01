@@ -1,6 +1,6 @@
-import { getNintendoGamePrices } from "../../games/getNintendoGamePrices";
-import { getSteamGamePrices } from "../../games/getSteamGamePrices";
-import { recordPrice } from "../../games/recordPrice";
+import { getNintendoGamePrices } from "../../products/getNintendoGamePrices";
+import { getSteamGamePrices } from "../../products/getSteamGamePrices";
+import { recordPrice } from "../../products/recordPrice";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "../writeFirestoreDocument";
 import { ApiResponse, COUNTRIES, CURRENCY_CODES, Games } from "../../Types";
