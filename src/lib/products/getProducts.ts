@@ -1,15 +1,16 @@
-import { getColesPrice } from "./getColesPrice";
-import { getWoolworthsPrice } from "./getWoolworthsPrice";
+import { getAldiProduct } from "./getAldiProduct";
+import { getColesProduct } from "./getColesProduct";
+import { getWoolworthsProduct } from "./getWoolworthsProduct";
 import { Product } from "../Types";
 
-const EXTRACTORS = [getColesPrice, getWoolworthsPrice];
+const GETTERS = [getAldiProduct, getColesProduct, getWoolworthsProduct];
 
 export const getProducts = async (url: string | undefined): Promise<Product | null> => {
   if (!url) {
     return null;
   }
-  for (const extractor of EXTRACTORS) {
-    const product = await extractor(url);
+  for (const getter of GETTERS) {
+    const product = await getter(url);
     if (product !== null) {
       return product;
     }

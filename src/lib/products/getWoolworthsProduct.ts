@@ -1,7 +1,7 @@
 import { BROWSER_HEADERS } from "../Constants";
 import { Product } from "../Types";
 
-export const getWoolworthsPrice = async (url: string): Promise<Product | null> => {
+export const getWoolworthsProduct = async (url: string): Promise<Product | null> => {
   if (!url.includes("woolworths.com.au")) {
     return null;
   }
