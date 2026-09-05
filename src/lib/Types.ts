@@ -76,19 +76,21 @@ export interface SteamInfo extends ParentInfo {
 export type ProductType = (typeof PRODUCT_TYPES)[number];
 
 export type Product = {
-  name: string;
   type: ProductType;
+  name: string;
   price: number;
 };
 
-export type GamePrice = { datetime: string; price: number };
+export type ProductPrice = { datetime: string; price: number };
+
+export type ProductPrices = Record<string, Record<string, ProductPrice[]>>;
 
 export type GameEntry = {
   id: string;
   type?: "titles" | "bundles";
-  prices: GamePrice[];
-  lowest?: GamePrice;
-  highest?: GamePrice;
+  prices: ProductPrice[];
+  lowest?: ProductPrice;
+  highest?: ProductPrice;
 };
 
 export type Game = {
