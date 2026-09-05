@@ -14,5 +14,5 @@ export const getAldiProduct = async (url: string): Promise<Product | null> => {
   if (!name || !price) {
     return null;
   }
-  return { name, price: Number(price) };
+  return { name, type: "supermarkets", price: Number(price) };
 };

@@ -14,5 +14,5 @@ export const getCapitalProduct = async (url: string): Promise<Product | null> =>
   if (!name || !price) {
     return null;
   }
-  return { name, price: Number(price.replace(/,/g, "")) };
+  return { name, type: "computer-hardware", price: Number(price.replace(/,/g, "")) };
 };

@@ -1,4 +1,4 @@
-import { PLATFORMS } from "./Constants";
+import { PLATFORMS, PRODUCT_TYPES } from "./Constants";
 
 // The Firestore REST API wraps every value in a { <type>Value: ... } envelope; the client
 // SDK does this unwrapping for you, but plain fetch() calls need to do it manually.
@@ -73,8 +73,11 @@ export interface SteamInfo extends ParentInfo {
   imageUrl: string;
 }
 
+export type ProductType = (typeof PRODUCT_TYPES)[number];
+
 export type Product = {
   name: string;
+  type: ProductType;
   price: number;
 };
 

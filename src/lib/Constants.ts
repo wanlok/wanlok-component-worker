@@ -7,3 +7,5 @@ export const COUNTRIES: Record<(typeof CURRENCY_CODES)[number], string> = {
 };
 
 export const PLATFORMS = ["nintendo", "steam"] as const;
+
+export const PRODUCT_TYPES = ["computer-hardware", "games", "supermarkets"] as const;
