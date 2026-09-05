@@ -6,7 +6,8 @@ import { getNintendoGamePrices } from "../../products/getNintendoGamePrices";
 import { getSteamGamePrices } from "../../products/getSteamGamePrices";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "../writeFirestoreDocument";
-import { ApiResponse, COUNTRIES, CURRENCY_CODES, Game, Games } from "../../Types";
+import { COUNTRIES, CURRENCY_CODES } from "../../Constants";
+import { ApiResponse, Game, Games } from "../../Types";
 
 export const postGame = async (env: Env, name: string, url: string): Promise<ApiResponse<Games>> => {
   const response = await getGames(env);

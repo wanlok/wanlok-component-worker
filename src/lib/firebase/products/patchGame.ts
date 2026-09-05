@@ -1,6 +1,7 @@
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "../writeFirestoreDocument";
-import { ApiResponse, Games, Platform, PLATFORMS } from "../../Types";
+import { PLATFORMS } from "../../Constants";
+import { ApiResponse, Games, Platform } from "../../Types";
 
 export const patchGame = async (
   env: Env,

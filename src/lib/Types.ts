@@ -1,3 +1,5 @@
+import { PLATFORMS } from "./Constants";
+
 // The Firestore REST API wraps every value in a { <type>Value: ... } envelope; the client
 // SDK does this unwrapping for you, but plain fetch() calls need to do it manually.
 export interface FirestoreValue {
@@ -76,14 +78,6 @@ export type Product = {
   price: number;
 };
 
-export const CURRENCY_CODES = ["aud", "cad", "hkd"] as const;
-
-export const COUNTRIES: Record<(typeof CURRENCY_CODES)[number], string> = {
-  aud: "AU",
-  cad: "CA",
-  hkd: "HK"
-};
-
 export type GamePrice = { datetime: string; price: number };
 
 export type GameEntry = {
@@ -99,8 +93,6 @@ export type Game = {
   cad?: GameEntry;
   hkd?: GameEntry;
 };
-
-export const PLATFORMS = ["nintendo", "steam"] as const;
 
 export type Platform = (typeof PLATFORMS)[number];
 

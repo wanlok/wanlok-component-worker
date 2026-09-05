@@ -3,7 +3,8 @@ import { getSteamGamePrices } from "../../products/getSteamGamePrices";
 import { recordPrice } from "../../products/recordPrice";
 import { getGames } from "./getGames";
 import { writeFirestoreDocument } from "../writeFirestoreDocument";
-import { ApiResponse, COUNTRIES, CURRENCY_CODES, Games } from "../../Types";
+import { COUNTRIES, CURRENCY_CODES } from "../../Constants";
+import { ApiResponse, Games } from "../../Types";
 
 export const putGames = async (env: Env): Promise<ApiResponse<Games>> => {
   const response = await getGames(env);
