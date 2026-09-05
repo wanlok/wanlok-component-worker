@@ -8,7 +8,7 @@ import { putGames } from "../lib/firebase/products/putGames";
 import { patchGame } from "../lib/firebase/products/patchGame";
 import { deleteGame } from "../lib/firebase/products/deleteGame";
 import { postProduct } from "../lib/firebase/products/postProduct";
-import { getProducts } from "../lib/products/getProducts";
+import { getSearchProducts } from "../lib/products/getSearchProducts";
 import { Platform, Product } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
@@ -59,8 +59,8 @@ route.delete("/games", async (c) => {
   return c.json(response);
 });
 
-route.get("/products", async (c) => {
-  const product = await getProducts(c.req.query("url"));
+route.get("/searchProducts", async (c) => {
+  const product = await getSearchProducts(c.req.query("url"));
   return c.json({ status: "ok", data: product });
 });
 

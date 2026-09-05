@@ -6,7 +6,7 @@ import { Product } from "../Types";
 
 const GETTERS = [getAldiProduct, getCapitalProduct, getColesProduct, getWoolworthsProduct];
 
-export const getProducts = async (url: string | undefined): Promise<Product | null> => {
+export const getSearchProducts = async (url: string | undefined): Promise<Product | null> => {
   if (!url) {
     return null;
   }
