@@ -1,15 +1,14 @@
-import { BROWSER_HEADERS } from "../Constants";
+import { getHtml } from "../getHtml";
 import { Product } from "../Types";
 
 export const getWoolworthsProduct = async (url: string): Promise<Product | null> => {
   if (!url.includes("woolworths.com.au")) {
     return null;
   }
-  const response = await fetch(url, { headers: BROWSER_HEADERS });
-  if (!response.ok) {
+  const html = await getHtml(url);
+  if (!html) {
     return null;
   }
-  const html = await response.text();
   const json = html.match(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)?.[1];
   if (!json) {
     return null;

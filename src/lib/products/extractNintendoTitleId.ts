@@ -1,4 +1,4 @@
-import { BROWSER_HEADERS } from "../Constants";
+import { getHtml } from "../getHtml";
 
 const extractProductSlug = (url: string): string | undefined => url.match(/\/store\/products\/([^/?]+)/)?.[1];
 
@@ -19,10 +19,9 @@ export const extractNintendoTitleId = async (url: string): Promise<string | unde
     return embeddedId;
   }
 
-  const response = await fetch(url, { headers: BROWSER_HEADERS });
-  if (!response.ok) {
+  const html = await getHtml(url);
+  if (!html) {
     return undefined;
   }
-  const html = await response.text();
   return extractIdFromHtml(html, extractProductSlug(url));
 };

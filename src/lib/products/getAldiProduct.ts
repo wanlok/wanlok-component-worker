@@ -1,15 +1,14 @@
-import { BROWSER_HEADERS } from "../Constants";
+import { getHtml } from "../getHtml";
 import { Product } from "../Types";
 
 export const getAldiProduct = async (url: string): Promise<Product | null> => {
   if (!url.includes("aldi.com.au")) {
     return null;
   }
-  const response = await fetch(url, { headers: BROWSER_HEADERS });
-  if (!response.ok) {
+  const html = await getHtml(url);
+  if (!html) {
     return null;
   }
-  const html = await response.text();
   const name = html.match(/product-details__title">([^<]*)</)?.[1];
   const price = html.match(/base-price__regular"><span>\$([\d.]+)</)?.[1];
   if (!name || !price) {
