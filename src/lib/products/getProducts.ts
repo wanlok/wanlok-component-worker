@@ -1,9 +1,10 @@
 import { getAldiProduct } from "./getAldiProduct";
+import { getCapitalProduct } from "./getCapitalProduct";
 import { getColesProduct } from "./getColesProduct";
 import { getWoolworthsProduct } from "./getWoolworthsProduct";
 import { Product } from "../Types";
 
-const GETTERS = [getAldiProduct, getColesProduct, getWoolworthsProduct];
+const GETTERS = [getAldiProduct, getCapitalProduct, getColesProduct, getWoolworthsProduct];
 
 export const getProducts = async (url: string | undefined): Promise<Product | null> => {
   if (!url) {
