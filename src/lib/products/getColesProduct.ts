@@ -17,5 +17,5 @@ export const getColesProduct = async (url: string): Promise<Product | null> => {
   if (!name || !price) {
     return null;
   }
-  return { type: "supermarkets", name: decodeHTMLEntities(name), price: Number(price) };
+  return { type: "supermarkets", seller: "Coles", name: decodeHTMLEntities(name), price: Number(price) };
 };

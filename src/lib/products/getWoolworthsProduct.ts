@@ -17,5 +17,5 @@ export const getWoolworthsProduct = async (url: string): Promise<Product | null>
   if (!data.name || data.offers?.price === undefined) {
     return null;
   }
-  return { type: "supermarkets", name: data.name, price: data.offers.price };
+  return { type: "supermarkets", seller: "Woolworths", name: data.name, price: data.offers.price };
 };

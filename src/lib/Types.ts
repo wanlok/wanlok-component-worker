@@ -77,6 +77,7 @@ export type ProductType = (typeof PRODUCT_TYPES)[number];
 
 export type Product = {
   type: ProductType;
+  seller: string;
   name: string;
   price: number;
 };
