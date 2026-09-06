@@ -1,7 +1,7 @@
 import { getHtml } from "../getHtml";
-import { Product } from "../Types";
+import { SearchProduct } from "../Types";
 
-export const getWoolworthsProduct = async (url: string): Promise<Product | null> => {
+export const getWoolworthsProduct = async (url: string): Promise<SearchProduct | null> => {
   if (!url.includes("woolworths.com.au")) {
     return null;
   }

@@ -1,10 +1,10 @@
 import { getHtml } from "../getHtml";
-import { Product } from "../Types";
+import { SearchProduct } from "../Types";
 
 const decodeHTMLEntities = (value: string): string =>
   value.replace(/&#x27;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"');
 
-export const getColesProduct = async (url: string): Promise<Product | null> => {
+export const getColesProduct = async (url: string): Promise<SearchProduct | null> => {
   if (!url.includes("coles.com.au")) {
     return null;
   }

@@ -1,7 +1,7 @@
 import { getHtml } from "../getHtml";
-import { Product } from "../Types";
+import { SearchProduct } from "../Types";
 
-export const getCapitalProduct = async (url: string): Promise<Product | null> => {
+export const getCapitalProduct = async (url: string): Promise<SearchProduct | null> => {
   if (!url.includes("cap.com.hk")) {
     return null;
   }

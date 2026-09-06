@@ -75,7 +75,7 @@ export interface SteamInfo extends ParentInfo {
 
 export type ProductType = (typeof PRODUCT_TYPES)[number];
 
-export type Product = {
+export type SearchProduct = {
   type: ProductType;
   seller: string;
   name: string;
@@ -84,7 +84,7 @@ export type Product = {
 
 export type ProductPrice = { datetime: string; price: number };
 
-export type ProductPrices = Record<string, Record<string, ProductPrice[]>>;
+export type Product = { seller: string; prices: ProductPrice[] };
 
 export type GameEntry = {
   id: string;

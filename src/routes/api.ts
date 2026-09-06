@@ -10,7 +10,7 @@ import { deleteGame } from "../lib/firebase/products/deleteGame";
 import { getProducts } from "../lib/firebase/products/getProducts";
 import { postProduct } from "../lib/firebase/products/postProduct";
 import { getSearchProducts } from "../lib/products/getSearchProducts";
-import { Platform, Product, ProductType } from "../lib/Types";
+import { Platform, ProductType, SearchProduct } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
 
@@ -71,7 +71,7 @@ route.get("/products/:type", async (c) => {
 });
 
 route.post("/products", async (c) => {
-  const { url, ...product } = await c.req.json<Product & { url: string }>();
+  const { url, ...product } = await c.req.json<SearchProduct & { url: string }>();
   const response = await postProduct(c.env, url, product);
   return c.json(response);
 });

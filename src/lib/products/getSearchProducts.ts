@@ -2,11 +2,11 @@ import { getAldiProduct } from "./getAldiProduct";
 import { getCapitalProduct } from "./getCapitalProduct";
 import { getColesProduct } from "./getColesProduct";
 import { getWoolworthsProduct } from "./getWoolworthsProduct";
-import { Product } from "../Types";
+import { SearchProduct } from "../Types";
 
 const GETTERS = [getAldiProduct, getCapitalProduct, getColesProduct, getWoolworthsProduct];
 
-export const getSearchProducts = async (url: string | undefined): Promise<Product | null> => {
+export const getSearchProducts = async (url: string | undefined): Promise<SearchProduct | null> => {
   if (!url) {
     return null;
   }
