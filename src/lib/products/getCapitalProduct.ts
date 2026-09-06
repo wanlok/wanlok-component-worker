@@ -14,5 +14,5 @@ export const getCapitalProduct = async (url: string): Promise<SearchProduct | nu
   if (!name || !price) {
     return null;
   }
-  return { type: "computer-hardware", seller: "Capital", name, price: Number(price.replace(/,/g, "")) };
+  return { type: "computer-hardware", seller: "capital", name, price: Number(price.replace(/,/g, "")) };
 };

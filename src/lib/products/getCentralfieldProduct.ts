@@ -17,5 +17,5 @@ export const getCentralfieldProduct = async (url: string): Promise<SearchProduct
   if (!data.name || data.offers?.price === undefined) {
     return null;
   }
-  return { type: "computer-hardware", seller: "Centralfield", name: data.name, price: Number(data.offers.price) };
+  return { type: "computer-hardware", seller: "centralfield", name: data.name, price: Number(data.offers.price) };
 };
