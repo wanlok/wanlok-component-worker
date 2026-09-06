@@ -16,6 +16,9 @@ export const patchProduct = async (
   if (!products[name]) {
     return { status: "error", message: `Product not found: ${name}` };
   }
+  if (name === newName) {
+    return { status: "ok", data: products };
+  }
   const urls = products[newName] ?? {};
   for (const [url, product] of Object.entries(products[name])) {
     const existing = urls[url];
