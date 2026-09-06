@@ -9,6 +9,7 @@ import { patchGame } from "../lib/firebase/products/patchGame";
 import { deleteGame } from "../lib/firebase/products/deleteGame";
 import { getProducts } from "../lib/firebase/products/getProducts";
 import { postProduct } from "../lib/firebase/products/postProduct";
+import { patchProduct } from "../lib/firebase/products/patchProduct";
 import { deleteProduct } from "../lib/firebase/products/deleteProduct";
 import { getSearchProducts } from "../lib/products/getSearchProducts";
 import { Platform, ProductType, SearchProduct } from "../lib/Types";
@@ -74,6 +75,12 @@ route.get("/products/:type", async (c) => {
 route.post("/products", async (c) => {
   const { url, ...product } = await c.req.json<SearchProduct & { url: string }>();
   const response = await postProduct(c.env, url, product);
+  return c.json(response);
+});
+
+route.patch("/products", async (c) => {
+  const { type, name, newName } = await c.req.json<{ type: ProductType; name: string; newName: string }>();
+  const response = await patchProduct(c.env, type, name, newName);
   return c.json(response);
 });
 
