@@ -12,12 +12,18 @@ import { postProduct } from "../lib/firebase/products/postProduct";
 import { putProduct } from "../lib/firebase/products/putProduct";
 import { patchProduct } from "../lib/firebase/products/patchProduct";
 import { deleteProduct } from "../lib/firebase/products/deleteProduct";
+import { postHealth } from "../lib/firebase/health/postHealth";
 import { getSearchProducts } from "../lib/products/getSearchProducts";
 import { Platform, ProductType, SearchProduct } from "../lib/Types";
 
 export const route = new Hono<{ Bindings: Env }>();
 
 route.use(cors());
+
+route.post("/health", async (c) => {
+  const response = await postHealth(c.env);
+  return c.json(response);
+});
 
 route.get("/collections", async (c) => {
   const response = await getFolders(c.env);

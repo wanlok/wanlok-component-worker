@@ -86,6 +86,8 @@ export type ProductPrice = { datetime: string; price: number };
 
 export type Product = { seller: string; prices: ProductPrice[] };
 
+export type Health = { datetime: string };
+
 export type GameEntry = {
   id: string;
   type?: "titles" | "bundles";
